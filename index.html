@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mallify — One Mall. One App. Infinite Experiences.</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- Intro Sequence Overlay -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div class="particles-bg"></div>
+        <header class="intro-header">
+            <div class="intro-brand"><span class="gold-dot"></span> MALLIFY · PRE-LAUNCH</div>
+            <button class="skip-btn" onclick="skipIntro()">SKIP INTRO &rarr;</button>
+        </header>
+        <div class="intro-center">
+            <h1 id="intro-text" class="intro-text">Every app changed convenience.</h1>
+        </div>
+        <div class="intro-progress">
+            <div class="progress-bar active"></div>
+            <div class="progress-bar"></div>
+            <div class="progress-bar"></div>
+            <div class="progress-bar"></div>
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Hero / Intro Section -->
+    <section class="hero-section">
+        <div class="particles-bg"></div>
+        <div class="hero-content">
+            <span class="eyebrow" style="margin-bottom: 2rem;">T - M I N U S &nbsp; T O &nbsp; R E V E A L</span>
+            
+            <h1 class="hero-headline">The world is <span class="gold-text">about to change</span><br>the way it visits the mall.</h1>
+
+            <div class="countdown-container boxed">
+                <div class="timer boxed-timer" id="countdown-timer">
+                    <div class="time-block">
+                        <div class="time-box"><span class="time-val" id="days">00</span></div>
+                        <span class="time-label">DAYS</span>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-box"><span class="time-val" id="hours">00</span></div>
+                        <span class="time-label">HOURS</span>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-box"><span class="time-val" id="minutes">00</span></div>
+                        <span class="time-label">MINUTES</span>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-box"><span class="time-val" id="seconds">00</span></div>
+                        <span class="time-label">SECONDS</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="hero-desc">Be among the first to witness the future.</p>
+
+            <button class="launch-btn" onclick="scrollToFeatures()">Launch Experience &rarr;</button>
+
+            <span class="target-date">T A R G E T &nbsp;&middot;&nbsp; J U N E &nbsp; 2 1 &nbsp;&middot;&nbsp; 2 0 2 6</span>
+        </div>
+        </div>
+    </section>
+
+    <!-- Loading Animation Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="particles-bg"></div>
+        <div class="intro-line"></div>
+        <div class="solar-system">
+            <div class="center-sphere"></div>
+            <div class="orbit-ring ring-1"></div>
+            
+            <div class="emit-container">
+                <div class="emit-wrapper w-1"><div class="emit-dot"></div></div>
+                <div class="emit-wrapper w-2"><div class="emit-dot"></div></div>
+                <div class="emit-wrapper w-3"><div class="emit-dot"></div></div>
+                <div class="emit-wrapper w-4"><div class="emit-dot"></div></div>
+                <div class="emit-wrapper w-5"><div class="emit-dot"></div></div>
+                <div class="emit-wrapper w-6"><div class="emit-dot"></div></div>
+                <div class="emit-wrapper w-7"><div class="emit-dot"></div></div>
+                <div class="emit-wrapper w-8"><div class="emit-dot"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Page -->
+    <div id="video-page" class="video-page">
+        <div class="particles-bg"></div>
+        <div class="video-container">
+            <button class="play-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <h2 class="video-title">Brand Reveal Film</h2>
+            <p class="video-subtitle">VIDEO PLACEHOLDER - 16:9</p>
+        </div>
+    </div>
+
+    <!-- Features Page -->
+    <div id="features-page" class="features-page">
+        <div class="particles-bg"></div>
+        <div class="features-header">
+            <span class="eyebrow" style="margin-bottom: 2rem;">I N T R O D U C I N G</span>
+            <h1 class="features-logo">Mallify</h1>
+            <p class="features-tagline">One Mall. One App. Infinite Experiences.</p>
+            <p class="platform-text">WORLD'S FIRST CONNECTED MALL PLATFORM</p>
+        </div>
+        
+        <div class="features-grid">
+            <!-- Card 1 -->
+            <div class="feature-card">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path></svg>
+                </div>
+                <h3>Restaurant Table Booking</h3>
+                <p>Reserve in seconds. Skip the wait. Walk straight to your table.</p>
+                <div class="card-footer">✓ INCLUDED</div>
+            </div>
+            <!-- Card 2 -->
+            <div class="feature-card">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h3>Live Table Availability</h3>
+                <p>See real-time tables across every restaurant in your mall.</p>
+                <div class="card-footer">✓ INCLUDED</div>
+            </div>
+            <!-- Card 3 -->
+            <div class="feature-card">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+                </div>
+                <h3>Real-Time Menu Discovery</h3>
+                <p>Browse menus, prices and chef's specials before you arrive.</p>
+                <div class="card-footer">✓ INCLUDED</div>
+            </div>
+            <!-- Card 4 -->
+            <div class="feature-card">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                </div>
+                <h3>Mall Navigation</h3>
+                <p>Interactive 3D maps to guide you to any store or facility.</p>
+                <div class="card-footer">✓ INCLUDED</div>
+            </div>
+            <!-- Card 5 -->
+            <div class="feature-card">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+                </div>
+                <h3>Movie & Entertainment Booking</h3>
+                <p>Book tickets and pre-order snacks in one seamless flow.</p>
+                <div class="card-footer">✓ INCLUDED</div>
+            </div>
+            <!-- Card 6 -->
+            <div class="feature-card">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </div>
+                <h3>Mood-Personalised Experience</h3>
+                <p>AI-driven recommendations based on what you feel like doing.</p>
+                <div class="card-footer">✓ INCLUDED</div>
+            </div>
+        </div>
+
+        <p class="ecosystem-text">Complete mall ecosystem. One ambient interface. Every visit, elevated.</p>
+
+        <div class="form-card">
+            <span class="eyebrow form-eyebrow">G E T &nbsp; E A R L Y &nbsp; A C C E S S</span>
+            <h2 class="form-title">Join the <span class="gold-text">revolution.</span></h2>
+            <p class="form-desc">Founding members shape the platform — and walk into launch day with priority access, complimentary perks and invitations to private tasting events.</p>
+            
+            <form id="early-access-form" onsubmit="event.preventDefault(); alert('Request received.');">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="name">FULL NAME</label>
+                        <input type="text" id="name" required placeholder="Your name">
+                    </div>
+                    <div class="input-group">
+                        <label for="mobile">MOBILE NUMBER</label>
+                        <input type="tel" id="mobile" required placeholder="+1 555 0100 200">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="email">EMAIL</label>
+                    <input type="email" id="email" required placeholder="you@domain.com">
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="submit-btn" style="box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);">Join The Revolution &rarr;</button>
+                    <span class="spam-notice">No spam. Just one invite, when the doors open.</span>
+                </div>
+            </form>
+        </div>
+
+        <div class="site-footer">
+            <p class="footer-tagline">The future of mall experiences begins with <span class="gold-text">Mallify.</span></p>
+            <p class="footer-copyright">&copy; 2026 MALLIFY &bull; A NEW CATEGORY OF EXPERIENCE</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
