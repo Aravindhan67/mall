@@ -58,57 +58,7 @@ function skipIntro() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    // Create an elegant Tap to Begin overlay to mathematically guarantee audio unlock on mobile
-    const beginOverlay = document.createElement('div');
-    beginOverlay.style.position = 'fixed';
-    beginOverlay.style.inset = '0';
-    beginOverlay.style.backgroundColor = '#0a0a0a';
-    beginOverlay.style.zIndex = '99999';
-    beginOverlay.style.display = 'flex';
-    beginOverlay.style.alignItems = 'center';
-    beginOverlay.style.justifyContent = 'center';
-    beginOverlay.style.flexDirection = 'column';
-    beginOverlay.style.cursor = 'pointer';
-    beginOverlay.style.transition = 'opacity 0.8s ease';
-    
-    beginOverlay.innerHTML = `
-        <div style="color: #d4af37; font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase; animation: pulse 2s infinite;">Tap Anywhere To Begin</div>
-    `;
-    
-    document.body.appendChild(beginOverlay);
-    
-    // Custom animation for the pulse effect
-    const style = document.createElement('style');
-    style.innerHTML = `
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; }
-            100% { opacity: 0.4; }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Wait for the mandatory tap
-    const handleBegin = (e) => {
-        e.preventDefault();
-        // Initialize audio context instantly on this strict user gesture
-        initAudio();
-        
-        // Hide overlay and start intro
-        beginOverlay.style.opacity = '0';
-        setTimeout(() => {
-            beginOverlay.remove();
-            startIntro();
-        }, 800);
-        
-        ['click', 'touchstart', 'touchend'].forEach(evt => {
-            beginOverlay.removeEventListener(evt, handleBegin);
-        });
-    };
-    
-    ['click', 'touchstart', 'touchend'].forEach(evt => {
-        beginOverlay.addEventListener(evt, handleBegin, { passive: false });
-    });
+    startIntro();
 });
 
 // Audio Context for Ticking Sound
