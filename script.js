@@ -116,27 +116,55 @@ function initAudio() {
     document.addEventListener(evt, initAudio);
 });
 
+let isTick = true;
+
 function playTickSound() {
     if (!isAudioEnabled || !audioCtx || audioCtx.state === 'suspended') return;
 
+    // High frequency mechanical click (gears)
+    const bufferSize = audioCtx.sampleRate * 0.04;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+    }
+    
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    
+    const bandpass = audioCtx.createBiquadFilter();
+    bandpass.type = 'bandpass';
+    bandpass.frequency.value = isTick ? 6000 : 4500;
+    bandpass.Q.value = 1.0;
+
+    const noiseGain = audioCtx.createGain();
+    noiseGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    noiseGain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 0.002);
+    noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.03);
+
+    noise.connect(bandpass);
+    bandpass.connect(noiseGain);
+    noiseGain.connect(audioCtx.destination);
+
+    // Low frequency resonance (clock body thud)
     const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const oscGain = audioCtx.createGain();
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(isTick ? 300 : 200, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(isTick ? 100 : 80, audioCtx.currentTime + 0.03);
 
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    oscGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    oscGain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.002);
+    oscGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
 
-    osc.type = 'sine';
-    // Sharp high pitch drop for a metallic "tick"
-    osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.03);
+    osc.connect(oscGain);
+    oscGain.connect(audioCtx.destination);
 
-    // Short volume spike
-    gain.gain.setValueAtTime(0.0, audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(1.5, audioCtx.currentTime + 0.005);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-
+    noise.start(audioCtx.currentTime);
     osc.start(audioCtx.currentTime);
-    osc.stop(audioCtx.currentTime + 0.04);
+    
+    isTick = !isTick; // alternate for the next second
 }
 
 // Target date for the launch: June 21, 2026 at 6 PM
