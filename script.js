@@ -62,6 +62,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // Audio Context for Ticking Sound
+/** @type {AudioContext} */
 let audioCtx;
 let isAudioEnabled = false;
 
@@ -84,6 +85,18 @@ function initAudio() {
                 resumePromise.catch(() => { /* suppress desktop warning */ });
             }
         }
+        
+        // CRITICAL iOS HACK: Mobile Safari will NOT unlock the audio context just by calling resume().
+        // It requires an actual audio node to play a sound during the trusted user interaction.
+        // We generate a microscopic, completely silent sound to force Safari to unlock the audio engine.
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        gain.gain.value = 0; // 100% silent
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(0);
+        osc.stop(audioCtx.currentTime + 0.001);
+
         isAudioEnabled = true;
     } catch (e) {
         console.warn("Audio API not supported", e);
@@ -406,19 +419,15 @@ function generateCertificate() {
     };
 }
 
-// Preload YouTube API (Only on HTTP/HTTPS to prevent file:// security exceptions)
+// Preload YouTube API unconditionally
 let isYouTubeApiReady = false;
-const isLocalFile = window.location.protocol === 'file:';
-
-if (!isLocalFile) {
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    if (firstScriptTag) {
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    } else {
-        document.head.appendChild(tag);
-    }
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+const firstScriptTag = document.getElementsByTagName('script')[0];
+if (firstScriptTag) {
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+} else {
+    document.head.appendChild(tag);
 }
 
 let ytPlayer;
@@ -460,16 +469,15 @@ function playVideo() {
         iframeDiv.style.pointerEvents = 'auto';
     }
     
-    // If running locally on file:// protocol, the YouTube API messaging is blocked by browser security.
-    // We must bypass the API and append autoplay=1 directly to the iframe URL.
-    if (!isLocalFile && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+    // Try to use the API to play
+    if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
         ytPlayer.playVideo();
     } else {
-        // Fallback: manually trigger autoplay on the existing iframe by appending &autoplay=1
-        if (!iframeDiv.src.includes('autoplay=1')) {
+        // Fallback for file:// environments where JS API postMessage is blocked
+        if (iframeDiv && !iframeDiv.src.includes('autoplay=1')) {
             iframeDiv.src += '&autoplay=1';
         }
-        // Since JS API is blocked locally, we simulate the 'onended' event for this 5-second video
+        // Fallback auto-skip timer
         setTimeout(skipToFeatures, 6500);
     }
 }
