@@ -17,10 +17,10 @@ function startIntro() {
         isCountdownVisible = true;
         return;
     }
-    
+
     introInterval = setInterval(() => {
         currentIntroStep++;
-        
+
         if (currentIntroStep >= introTexts.length) {
             skipIntro();
             return;
@@ -28,7 +28,7 @@ function startIntro() {
 
         // Fade out text
         textEl.style.opacity = 0;
-        
+
         setTimeout(() => {
             textEl.innerText = introTexts[currentIntroStep];
             progressBars.forEach((bar, index) => {
@@ -38,7 +38,7 @@ function startIntro() {
             });
             textEl.style.opacity = 1;
         }, 500);
-        
+
     }, 3000);
 }
 
@@ -85,7 +85,7 @@ function initAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
-        
+
         if (audioCtx.state === 'suspended') {
             const resumePromise = audioCtx.resume();
             if (resumePromise !== undefined) {
@@ -146,7 +146,7 @@ function playTickSound() {
     // Wall clock "Thud/Resonance" (Wooden/Plastic Body echoing)
     const bodyOsc = audioCtx.createOscillator();
     const bodyGain = audioCtx.createGain();
-    
+
     bodyOsc.type = 'sine';
     bodyOsc.frequency.setValueAtTime(isTick ? 250 : 200, audioCtx.currentTime);
     bodyOsc.frequency.exponentialRampToValueAtTime(isTick ? 150 : 120, audioCtx.currentTime + 0.04);
@@ -160,14 +160,14 @@ function playTickSound() {
 
     clickOsc.start(audioCtx.currentTime);
     bodyOsc.start(audioCtx.currentTime);
-    
+
     clickOsc.stop(audioCtx.currentTime + 0.04);
     bodyOsc.stop(audioCtx.currentTime + 0.07);
 
     isTick = !isTick; // alternate for the next second
 }
 
-// Target date for the launch: June 21, 2026 at 6 PM
+// Target date for the launch: June 19, 2026 at 5:30 PM
 const targetDate = new Date("June 21, 2026 18:00:00").getTime();
 let isCountdownVisible = false;
 
@@ -180,6 +180,13 @@ function updateCountdown() {
         document.getElementById("hours").innerText = "00";
         document.getElementById("minutes").innerText = "00";
         document.getElementById("seconds").innerText = "00";
+
+        // Release the button
+        const launchBtn = document.getElementById("main-launch-btn");
+        if (launchBtn) {
+            launchBtn.disabled = false;
+        }
+
         return;
     }
 
@@ -219,10 +226,10 @@ function scrollToFeatures() {
 
         if (crackerOverlay && countdownText) {
             crackerOverlay.classList.add("active");
-            
+
             // Sequence: 3, 2, 1, Firework
             let count = 3;
-            
+
             function animateNumber() {
                 if (count > 0) {
                     countdownText.innerText = count;
@@ -230,20 +237,20 @@ function scrollToFeatures() {
                     // trigger reflow
                     void countdownText.offsetWidth;
                     countdownText.classList.add("pop");
-                    
+
                     count--;
                     setTimeout(animateNumber, 1000);
                 } else {
                     countdownText.style.display = "none";
-                    
+
                     const heroSection = document.querySelector('.hero-section');
                     if (heroSection) heroSection.style.display = 'none';
-                    
+
                     const videoPage = document.getElementById('video-page');
                     if (videoPage) videoPage.classList.add('active');
-                    
+
                     crackerOverlay.classList.remove("active");
-                    
+
                     // Reset things in case they go back
                     if (launchBtn) {
                         launchBtn.innerHTML = "Launch Experience &rarr;";
@@ -252,7 +259,7 @@ function scrollToFeatures() {
                     countdownText.style.display = "block";
                 }
             }
-            
+
             animateNumber();
         } else {
             // Fallback if overlay not found
@@ -308,32 +315,32 @@ function startRealisticFireworks(duration) {
         if (isGrand) triggerFlash();
         const count = isGrand ? 350 : 120 + Math.random() * 80;
         const power = isGrand ? 18 : 6 + Math.random() * 5;
-        
+
         for (let i = 0; i < count; i++) {
             const angle = Math.random() * Math.PI * 2;
             const speed = Math.pow(Math.random(), 0.5) * power;
             const color = colors[Math.floor(Math.random() * colors.length)];
-            
+
             particles.push({
                 x: x,
                 y: y,
                 vx: Math.cos(angle) * speed,
                 vy: Math.sin(angle) * speed,
                 life: 1.0,
-                decay: (Math.random() * 0.015 + 0.008) * (isGrand ? 0.6 : 1), 
+                decay: (Math.random() * 0.015 + 0.008) * (isGrand ? 0.6 : 1),
                 color: color,
                 size: Math.random() * 2 + 1,
-                sparkle: Math.random() > 0.7 
+                sparkle: Math.random() > 0.7
             });
         }
     }
 
     let lastTime = Date.now();
-    
+
     // Launch sequence
     let fireworkInterval = setInterval(() => {
         createExplosion(
-            Math.random() * canvas.width * 0.8 + canvas.width * 0.1, 
+            Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
             Math.random() * canvas.height * 0.6 + canvas.height * 0.1
         );
     }, 450);
@@ -345,11 +352,11 @@ function startRealisticFireworks(duration) {
         ctx.beginPath();
         const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2);
         const alpha = p.sparkle ? p.life * (0.5 + Math.random() * 0.5) : p.life;
-        
+
         gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`); // hot white core
         gradient.addColorStop(0.2, `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${alpha})`);
         gradient.addColorStop(1, `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0)`);
-        
+
         ctx.fillStyle = gradient;
         ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
         ctx.fill();
@@ -358,16 +365,16 @@ function startRealisticFireworks(duration) {
     function animate() {
         if (Date.now() - lastTime > duration && particles.length === 0) {
             canvas.style.display = 'none';
-            if(flash.parentNode) flash.parentNode.removeChild(flash);
+            if (flash.parentNode) flash.parentNode.removeChild(flash);
             return;
         }
         requestAnimationFrame(animate);
-        
+
         ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'; 
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.globalCompositeOperation = 'screen'; 
+
+        ctx.globalCompositeOperation = 'screen';
 
         for (let i = particles.length - 1; i >= 0; i--) {
             let p = particles[i];
@@ -390,14 +397,14 @@ function startRealisticFireworks(duration) {
 
     setTimeout(() => {
         clearInterval(fireworkInterval);
-    }, duration - 1000); 
+    }, duration - 1000);
 }
 
 
 function generateCertificate() {
     const nameInput = document.getElementById('cert-name');
     let name = nameInput.value.trim();
-    
+
     if (!name) {
         alert("Please enter your name first!");
         return;
@@ -405,43 +412,43 @@ function generateCertificate() {
 
     // Capitalize the first letter of every word (text-transform: capitalize)
     name = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    
+
     // Add comma after the name
     name += ',';
-    
+
     // Create an off-screen canvas
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    
+
     // Load the certificate background image from base64 (avoids canvas tainting on local files)
     const img = new Image();
     img.src = typeof certBase64 !== 'undefined' ? certBase64 : 'certificate.png';
-    
-    img.onload = function() {
+
+    img.onload = function () {
         // Match canvas dimensions to the image
         canvas.width = img.width;
         canvas.height = img.height;
-        
+
         // Draw the certificate template
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        
+
         // Configure text styling
         ctx.textAlign = 'left';  // Align left so it flows naturally after "Dear"
         ctx.textBaseline = 'alphabetic'; // Better for aligning with existing baseline text
-        
+
         // Set dynamic font size based on image width (matching the certificate body text size)
         const fontSize = Math.floor(canvas.width * 0.033);
         // Use normal weight to match the thin "Dear" text perfectly
         ctx.font = `normal ${fontSize}px "Outfit", "Inter", "Helvetica Neue", sans-serif`;
-        ctx.fillStyle = '#222222'; 
-        
+        ctx.fillStyle = '#222222';
+
         // Estimate the position of the space after "Dear "
         // Moved X to 13.5% and Y to 24% to perfectly match the baseline and spacing
-        const nameX = canvas.width * 0.135; 
+        const nameX = canvas.width * 0.135;
         const nameY = canvas.height * 0.240;
-        
+
         ctx.fillText(name, nameX, nameY);
-        
+
         // Download logic
         const dataUrl = canvas.toDataURL('image/png', 0.95);
         const link = document.createElement('a');
@@ -449,8 +456,8 @@ function generateCertificate() {
         link.href = dataUrl;
         link.click();
     };
-    
-    img.onerror = function() {
+
+    img.onerror = function () {
         alert("Failed to load certificate.png. Please ensure the image exists in the folder.");
     };
 }
@@ -476,9 +483,9 @@ if (firstScriptTag) {
 let ytPlayer;
 let hasVideoStarted = false;
 
-window.onYouTubeIframeAPIReady = function() {
+window.onYouTubeIframeAPIReady = function () {
     isYouTubeApiReady = true;
-    
+
     ytPlayer = new YT.Player('yt-player', {
         events: {
             'onStateChange': onPlayerStateChange
@@ -491,7 +498,7 @@ function onPlayerStateChange(event) {
     if (event.data === YT.PlayerState.PLAYING || event.data === 1) {
         hasVideoStarted = true;
     }
-    
+
     // When video ends (state 0), automatically skip to features
     if ((event.data === YT.PlayerState.ENDED || event.data === 0) && hasVideoStarted) {
         skipToFeatures();
@@ -503,15 +510,15 @@ function playVideo() {
     const placeholder = document.querySelector('.video-placeholder');
     const iframeDiv = document.getElementById('yt-player');
     const skipBtn = document.querySelector('.skip-video-btn');
-    
+
     if (placeholder) placeholder.style.display = 'none';
     if (skipBtn) skipBtn.style.display = 'block';
-    
+
     if (iframeDiv) {
         iframeDiv.style.opacity = '1';
         iframeDiv.style.pointerEvents = 'auto';
     }
-    
+
     // Try to use the API to play
     if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
         ytPlayer.playVideo();
@@ -528,10 +535,10 @@ function playVideo() {
 function skipToFeatures() {
     const videoPage = document.getElementById('video-page');
     if (videoPage) videoPage.classList.remove('active');
-    
+
     // Stop YouTube video from playing in the background
     if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
-        try { ytPlayer.stopVideo(); } catch(e) {}
+        try { ytPlayer.stopVideo(); } catch (e) { }
     }
     // Bulletproof fallback: reset the iframe src to instantly kill the video/audio
     const iframeDiv = document.getElementById('yt-player');
@@ -540,7 +547,7 @@ function skipToFeatures() {
         currentSrc = currentSrc.replace('&autoplay=1', '');
         iframeDiv.src = currentSrc;
     }
-    
+
     const featuresPage = document.getElementById('features-page');
     if (featuresPage) featuresPage.classList.add('active');
 }
@@ -554,32 +561,32 @@ document.addEventListener('click', (e) => {
 
 function submitJoinForm(event) {
     event.preventDefault();
-    
+
     const formCard = document.getElementById('join-form-card');
     const successCard = document.getElementById('join-success-card');
-    
+
     if (!formCard || !successCard) return;
-    
+
     // Smoothly fade out the form card
     formCard.style.transition = "opacity 0.5s ease, transform 0.5s ease";
     formCard.style.opacity = "0";
     formCard.style.transform = "scale(0.95)";
-    
+
     setTimeout(() => {
         formCard.style.display = "none";
-        
+
         // Prepare success card
         successCard.style.display = "flex";
         successCard.style.opacity = "0";
         successCard.style.transform = "scale(0.95)";
         successCard.style.transition = "opacity 0.6s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-        
+
         // Trigger reflow
         void successCard.offsetWidth;
-        
+
         // Fade in and pop up success card
         successCard.style.opacity = "1";
         successCard.style.transform = "scale(1)";
-        
+
     }, 500); // Wait for form fade out
 }

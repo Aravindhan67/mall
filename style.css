@@ -187,19 +187,34 @@ body {
 /* Launch Button */
 .launch-btn {
     background: var(--gold-gradient);
-    color: #000;
+    color: var(--background);
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1rem 3rem;
     border: none;
-    padding: 1rem 2.5rem;
-    font-size: 1rem;
-    font-weight: 600;
     border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+    transition: all 0.3s ease;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
 }
 
-.launch-btn:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
+.launch-btn:disabled {
+    background: #444;
+    color: #888;
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.launch-btn:not(:disabled):hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0 60px rgba(212, 175, 55, 0.6);
 }
 
 /* Features Grid */
