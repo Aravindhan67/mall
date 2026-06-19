@@ -66,33 +66,42 @@ window.addEventListener('DOMContentLoaded', () => {
 let audioCtx;
 let isAudioEnabled = false;
 
-function initAudio() {
+function removeAudioListeners() {
     ['click', 'keydown', 'touchstart', 'touchend', 'mousedown', 'pointerdown'].forEach(evt => {
         document.removeEventListener(evt, initAudio);
     });
+}
 
+function initAudio() {
     try {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
         
-        // Mobile iOS Safari explicitly requires calling resume() synchronously 
-        // inside the user gesture, otherwise it stays suspended forever.
         if (audioCtx.state === 'suspended') {
             const resumePromise = audioCtx.resume();
             if (resumePromise !== undefined) {
-                resumePromise.catch(() => { /* suppress desktop warning */ });
+                resumePromise.then(() => {
+                    if (audioCtx.state === 'running') {
+                        isAudioEnabled = true;
+                        removeAudioListeners();
+                    }
+                }).catch(() => { /* suppress desktop warning */ });
             }
+        } else if (audioCtx.state === 'running') {
+            isAudioEnabled = true;
+            removeAudioListeners();
         }
-        isAudioEnabled = true;
     } catch (e) {
         console.warn("Audio API not supported", e);
     }
 }
 
-// Enable audio on first interaction (covering all possible mobile/desktop gestures)
+// Enable audio on first successful interaction (covering all possible mobile/desktop gestures)
+// We do NOT use { once: true } here because mobile browsers might block the first 'touchstart' gesture.
+// The listeners will be removed manually by removeAudioListeners() only after the audio is confirmed unlocked.
 ['click', 'keydown', 'touchstart', 'touchend', 'mousedown', 'pointerdown'].forEach(evt => {
-    document.addEventListener(evt, initAudio, { once: true });
+    document.addEventListener(evt, initAudio);
 });
 
 function playTickSound() {
@@ -408,6 +417,13 @@ function generateCertificate() {
 
 // Preload YouTube API unconditionally
 let isYouTubeApiReady = false;
+
+// Fix Error 153 by explicitly passing the current origin to the iframe before API loads
+const ytIframe = document.getElementById('yt-player');
+if (ytIframe && !ytIframe.src.includes('origin=')) {
+    ytIframe.src += `&origin=${encodeURIComponent(window.location.origin)}`;
+}
+
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -472,6 +488,18 @@ function playVideo() {
 function skipToFeatures() {
     const videoPage = document.getElementById('video-page');
     if (videoPage) videoPage.classList.remove('active');
+    
+    // Stop YouTube video from playing in the background
+    if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
+        try { ytPlayer.stopVideo(); } catch(e) {}
+    }
+    // Bulletproof fallback: reset the iframe src to instantly kill the video/audio
+    const iframeDiv = document.getElementById('yt-player');
+    if (iframeDiv) {
+        let currentSrc = iframeDiv.src;
+        currentSrc = currentSrc.replace('&autoplay=1', '');
+        iframeDiv.src = currentSrc;
+    }
     
     const featuresPage = document.getElementById('features-page');
     if (featuresPage) featuresPage.classList.add('active');
