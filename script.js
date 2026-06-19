@@ -67,10 +67,9 @@ let audioCtx;
 let isAudioEnabled = false;
 
 function initAudio() {
-    // Remove all listeners once one fires
-    document.removeEventListener('click', initAudio);
-    document.removeEventListener('keydown', initAudio);
-    document.removeEventListener('touchstart', initAudio);
+    ['click', 'keydown', 'touchstart', 'touchend', 'mousedown', 'pointerdown'].forEach(evt => {
+        document.removeEventListener(evt, initAudio);
+    });
 
     try {
         if (!audioCtx) {
@@ -91,10 +90,10 @@ function initAudio() {
     }
 }
 
-// Enable audio on first interaction
-document.addEventListener('click', initAudio, { once: true });
-document.addEventListener('keydown', initAudio, { once: true });
-document.addEventListener('touchstart', initAudio, { once: true });
+// Enable audio on first interaction (covering all possible mobile/desktop gestures)
+['click', 'keydown', 'touchstart', 'touchend', 'mousedown', 'pointerdown'].forEach(evt => {
+    document.addEventListener(evt, initAudio, { once: true });
+});
 
 function playTickSound() {
     if (!isAudioEnabled || !audioCtx || audioCtx.state === 'suspended') return;
@@ -119,8 +118,8 @@ function playTickSound() {
     osc.stop(audioCtx.currentTime + 0.04);
 }
 
-// Target date for the launch: June 21, 2026
-const targetDate = new Date("June 21, 2026 00:00:00").getTime();
+// Target date for the launch: June 21, 2026 at 6 PM
+const targetDate = new Date("June 21, 2026 18:00:00").getTime();
 let isCountdownVisible = false;
 
 function updateCountdown() {
