@@ -20,7 +20,7 @@
         <div class="particles-bg"></div>
         <header class="intro-header">
             <div class="intro-brand"><span class="gold-dot"></span>PRE-LAUNCH</div>
-            <button class="skip-btn" onclick="skipIntro()">SKIP INTRO &rarr;</button>
+            <button class="skip-btn" onclick="initAudio(); skipIntro();">SKIP INTRO &rarr;</button>
         </header>
         <div class="intro-center">
             <h1 id="intro-text" class="intro-text">Every app changed convenience.</h1>
@@ -65,7 +65,7 @@
 
             <p class="hero-desc">Be among the first to witness the future.</p>
 
-            <button class="launch-btn" onclick="scrollToFeatures()">Launch Experience &rarr;</button>
+            <button class="launch-btn" onclick="initAudio(); scrollToFeatures();">Launch Experience &rarr;</button>
 
             <span class="target-date">T A R G E T &nbsp;&middot;&nbsp; J U N E &nbsp; 2 1 &nbsp;&middot;&nbsp; 2 0 2 6</span>
         </div>
@@ -86,7 +86,7 @@
             <iframe id="yt-player" src="https://www.youtube.com/embed/Wyy51Zttbwg?enablejsapi=1&playsinline=1&controls=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; inset: 0; border-radius: 20px; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity 0.5s; z-index: 5; border: none; width: 100%; height: 100%;"></iframe>
             
             <div class="video-placeholder" style="position: relative; z-index: 10;">
-                <button class="play-btn">
+                <button class="play-btn" onclick="playVideo()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                 </button>
                 <h2 class="video-title">Brand Reveal Film</h2>
@@ -166,12 +166,12 @@
 
         <p class="ecosystem-text">Complete mall ecosystem. One ambient interface. Every visit, elevated.</p>
 
-        <div class="certificate-section" style="max-width: 800px; margin: 4rem auto; text-align: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.2); padding: 3rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+        <div class="certificate-section">
             <h2 class="form-title" style="margin-bottom: 1rem;">Claim Your <span class="gold-text">Launch Certificate</span></h2>
             <p class="form-desc" style="margin-bottom: 2rem;">Commemorate your attendance at the world premiere of Mallify.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; max-width: 500px; margin: 0 auto; align-items: center;">
-                <input type="text" id="cert-name" placeholder="Your Full Name" style="flex: 1; padding: 1rem 1.5rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(212,175,55,0.4); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; font-size: 1rem; outline: none;">
-                <button onclick="generateCertificate()" class="submit-btn" style="padding: 1rem 2rem; width: auto; margin-top: 0; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);">Download &rarr;</button>
+            <div class="cert-form-row">
+                <input type="text" id="cert-name" placeholder="Your Full Name">
+                <button onclick="generateCertificate()" class="submit-btn">Download &rarr;</button>
             </div>
         </div>
 

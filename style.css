@@ -711,6 +711,50 @@ body {
     font-size: 0.85rem;
 }
 
+.certificate-section {
+    max-width: 800px;
+    margin: 4rem auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.cert-form-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+#cert-name {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 8px;
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+}
+
+#cert-name:focus {
+    border-color: var(--gold);
+}
+
+.cert-form-row .submit-btn {
+    width: auto;
+    margin-top: 0;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .features-grid {
@@ -719,15 +763,24 @@ body {
 }
 
 @media (max-width: 768px) {
-    .logo-title { font-size: 5rem; }
-    .subtitle { font-size: 1.4rem; }
-    .timer { gap: 1rem; }
-    .time-val { font-size: 2.5rem; }
+    .hero-headline { font-size: 2.2rem; }
+    .features-logo { max-width: 200px !important; }
+    .timer { gap: 0.5rem; }
+    .time-box { width: 70px; height: 70px; margin-bottom: 0.5rem; }
+    .time-val { font-size: 2rem; }
+    .time-label { font-size: 0.6rem; }
     .features-grid { grid-template-columns: 1fr; }
-    .form-card { padding: 2rem; }
-    .form-title { font-size: 3rem; }
+    .form-card { padding: 2rem 1.5rem; }
+    .form-title { font-size: 2.5rem; }
     .input-row { grid-template-columns: 1fr; gap: 0; }
     .form-footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .video-container { width: 95%; gap: 1rem; padding: 2rem 0; }
+    .video-title { font-size: 1.8rem; }
+    .countdown-text { font-size: 10rem; }
+    .features-page { padding: 4rem 1rem; }
+    .certificate-section { margin: 2rem 1rem !important; padding: 1.5rem !important; }
+    .cert-form-row { flex-direction: column; align-items: stretch; }
+    .cert-form-row .submit-btn { width: 100%; }
 }
 
 /* Intro Overlay */

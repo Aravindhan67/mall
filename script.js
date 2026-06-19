@@ -66,13 +66,28 @@ let audioCtx;
 let isAudioEnabled = false;
 
 function initAudio() {
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // Remove all listeners once one fires
+    document.removeEventListener('click', initAudio);
+    document.removeEventListener('keydown', initAudio);
+    document.removeEventListener('touchstart', initAudio);
+
+    try {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        
+        // Mobile iOS Safari explicitly requires calling resume() synchronously 
+        // inside the user gesture, otherwise it stays suspended forever.
+        if (audioCtx.state === 'suspended') {
+            const resumePromise = audioCtx.resume();
+            if (resumePromise !== undefined) {
+                resumePromise.catch(() => { /* suppress desktop warning */ });
+            }
+        }
+        isAudioEnabled = true;
+    } catch (e) {
+        console.warn("Audio API not supported", e);
     }
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
-    isAudioEnabled = true;
 }
 
 // Enable audio on first interaction
@@ -332,12 +347,18 @@ function startRealisticFireworks(duration) {
 
 function generateCertificate() {
     const nameInput = document.getElementById('cert-name');
-    const name = nameInput.value.trim();
+    let name = nameInput.value.trim();
     
     if (!name) {
         alert("Please enter your name first!");
         return;
     }
+
+    // Capitalize the first letter of every word (text-transform: capitalize)
+    name = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    
+    // Add comma after the name
+    name += ',';
     
     // Create an off-screen canvas
     const canvas = document.createElement('canvas');
@@ -345,7 +366,7 @@ function generateCertificate() {
     
     // Load the certificate background image from base64 (avoids canvas tainting on local files)
     const img = new Image();
-    img.src = typeof certBase64 !== 'undefined' ? certBase64 : 'cer.jpg';
+    img.src = typeof certBase64 !== 'undefined' ? certBase64 : 'certificate.png';
     
     img.onload = function() {
         // Match canvas dimensions to the image
@@ -356,40 +377,48 @@ function generateCertificate() {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         
         // Configure text styling
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+        ctx.textAlign = 'left';  // Align left so it flows naturally after "Dear"
+        ctx.textBaseline = 'alphabetic'; // Better for aligning with existing baseline text
         
-        // Set dynamic font size based on image width (e.g., 5% of width)
-        const fontSize = Math.floor(canvas.width * 0.06);
-        ctx.font = `italic ${fontSize}px "Georgia", serif`;
-        ctx.fillStyle = '#8a1c31'; // A deep crimson/maroon to match the template border
+        // Set dynamic font size based on image width (matching the certificate body text size)
+        const fontSize = Math.floor(canvas.width * 0.033);
+        // Use normal weight to match the thin "Dear" text perfectly
+        ctx.font = `normal ${fontSize}px "Outfit", "Inter", "Helvetica Neue", sans-serif`;
+        ctx.fillStyle = '#222222'; 
         
-        // Draw the user's name near the center (adjust Y multiplier if needed based on the template)
-        // 0.48 puts it just slightly above the exact vertical center
-        ctx.fillText(name, canvas.width / 2, canvas.height * 0.48);
+        // Estimate the position of the space after "Dear "
+        // Moved X to 13.5% and Y to 24% to perfectly match the baseline and spacing
+        const nameX = canvas.width * 0.135; 
+        const nameY = canvas.height * 0.240;
+        
+        ctx.fillText(name, nameX, nameY);
         
         // Download logic
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+        const dataUrl = canvas.toDataURL('image/png', 0.95);
         const link = document.createElement('a');
-        link.download = `Mallify_Certificate_${name.replace(/\s+/g, '_')}.jpg`;
+        link.download = `Mallify_Certificate_${name.replace(/\s+/g, '_')}.png`;
         link.href = dataUrl;
         link.click();
     };
     
     img.onerror = function() {
-        alert("Failed to load cer.jpg. Please ensure the image exists in the folder.");
+        alert("Failed to load certificate.png. Please ensure the image exists in the folder.");
     };
 }
 
-// Preload YouTube API
+// Preload YouTube API (Only on HTTP/HTTPS to prevent file:// security exceptions)
 let isYouTubeApiReady = false;
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName('script')[0];
-if (firstScriptTag) {
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-} else {
-    document.head.appendChild(tag);
+const isLocalFile = window.location.protocol === 'file:';
+
+if (!isLocalFile) {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    if (firstScriptTag) {
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    } else {
+        document.head.appendChild(tag);
+    }
 }
 
 let ytPlayer;
@@ -431,13 +460,17 @@ function playVideo() {
         iframeDiv.style.pointerEvents = 'auto';
     }
     
-    if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+    // If running locally on file:// protocol, the YouTube API messaging is blocked by browser security.
+    // We must bypass the API and append autoplay=1 directly to the iframe URL.
+    if (!isLocalFile && ytPlayer && typeof ytPlayer.playVideo === 'function') {
         ytPlayer.playVideo();
     } else {
         // Fallback: manually trigger autoplay on the existing iframe by appending &autoplay=1
         if (!iframeDiv.src.includes('autoplay=1')) {
             iframeDiv.src += '&autoplay=1';
         }
+        // Since JS API is blocked locally, we simulate the 'onended' event for this 5-second video
+        setTimeout(skipToFeatures, 6500);
     }
 }
 
