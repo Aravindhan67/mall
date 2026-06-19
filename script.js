@@ -552,3 +552,34 @@ document.addEventListener('click', (e) => {
     }
 });
 
+function submitJoinForm(event) {
+    event.preventDefault();
+    
+    const formCard = document.getElementById('join-form-card');
+    const successCard = document.getElementById('join-success-card');
+    
+    if (!formCard || !successCard) return;
+    
+    // Smoothly fade out the form card
+    formCard.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+    formCard.style.opacity = "0";
+    formCard.style.transform = "scale(0.95)";
+    
+    setTimeout(() => {
+        formCard.style.display = "none";
+        
+        // Prepare success card
+        successCard.style.display = "flex";
+        successCard.style.opacity = "0";
+        successCard.style.transform = "scale(0.95)";
+        successCard.style.transition = "opacity 0.6s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        
+        // Trigger reflow
+        void successCard.offsetWidth;
+        
+        // Fade in and pop up success card
+        successCard.style.opacity = "1";
+        successCard.style.transform = "scale(1)";
+        
+    }, 500); // Wait for form fade out
+}

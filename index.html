@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pre Launch — One Mall. One App. Infinite Experiences.</title>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap"
+        rel="stylesheet">
+
     <link rel="icon" href="icon.png" type="image/png">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
+
     <!-- Intro Sequence Overlay -->
     <div id="intro-overlay" class="intro-overlay">
         <div class="particles-bg"></div>
@@ -38,12 +42,18 @@
         <div class="particles-bg"></div>
         <div class="hero-content">
             <button id="unmute-btn" class="unmute-btn" onclick="initAudio()" style="display: none;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
                 Tap to Unmute
             </button>
             <span class="eyebrow" style="margin-bottom: 2rem;">T - M I N U S &nbsp; T O &nbsp; R E V E A L</span>
-            
-            <h1 class="hero-headline">The world is <span class="gold-text">about to change</span><br>the way it visits the mall.</h1>
+
+            <h1 class="hero-headline">The world is <span class="gold-text">about to change</span><br>the way it visits
+                the mall.</h1>
 
             <div class="countdown-container boxed">
                 <div class="timer boxed-timer" id="countdown-timer">
@@ -70,7 +80,8 @@
 
             <button class="launch-btn" onclick="initAudio(); scrollToFeatures();">Launch Experience &rarr;</button>
 
-            <span class="target-date">T A R G E T &nbsp;&middot;&nbsp; J U N E &nbsp; 2 1 &nbsp;&middot;&nbsp; 2 0 2 6</span>
+            <span class="target-date">T A R G E T &nbsp;&middot;&nbsp; J U N E &nbsp; 2 1 &nbsp;&middot;&nbsp; 2 0 2
+                6</span>
         </div>
         </div>
     </section>
@@ -86,17 +97,26 @@
     <div id="video-page" class="video-page">
         <div class="particles-bg"></div>
         <div class="video-container" style="position: relative;">
-            <iframe id="yt-player" src="https://www.youtube.com/embed/Wyy51Zttbwg?enablejsapi=1&playsinline=1&controls=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; inset: 0; border-radius: 20px; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity 0.5s; z-index: 5; border: none; width: 100%; height: 100%;"></iframe>
-            
+            <iframe id="yt-player"
+                src="https://www.youtube.com/embed/Wyy51Zttbwg?enablejsapi=1&playsinline=1&controls=1&rel=0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                style="position: absolute; inset: 0; border-radius: 20px; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity 0.5s; z-index: 5; border: none; width: 100%; height: 100%;"></iframe>
+
             <div class="video-placeholder" style="position: relative; z-index: 10;">
                 <button class="play-btn" onclick="playVideo()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
                 </button>
                 <h2 class="video-title">Brand Reveal Film</h2>
                 <p class="video-subtitle">VIDEO PLACEHOLDER - 16:9</p>
             </div>
-            
-            <button class="skip-video-btn" onclick="skipToFeatures()" style="display: none; position: absolute; bottom: -70px; left: 50%; transform: translateX(-50%); background: transparent; border: 1px solid #d4af37; color: #d4af37; padding: 0.8rem 2rem; border-radius: 50px; cursor: pointer; transition: background 0.3s, color 0.3s; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; z-index: 20;" onmouseover="this.style.background='#d4af37'; this.style.color='#000';" onmouseout="this.style.background='transparent'; this.style.color='#d4af37';">Skip Video &rarr;</button>
+
+            <button class="skip-video-btn" onclick="skipToFeatures()"
+                style="display: none; position: absolute; bottom: -70px; left: 50%; transform: translateX(-50%); background: transparent; border: 1px solid #d4af37; color: #d4af37; padding: 0.8rem 2rem; border-radius: 50px; cursor: pointer; transition: background 0.3s, color 0.3s; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; z-index: 20;"
+                onmouseover="this.style.background='#d4af37'; this.style.color='#000';"
+                onmouseout="this.style.background='transparent'; this.style.color='#d4af37';">Skip Video &rarr;</button>
         </div>
     </div>
 
@@ -105,16 +125,22 @@
         <div class="particles-bg"></div>
         <div class="features-header">
             <span class="eyebrow" style="margin-bottom: 2rem;">I N T R O D U C I N G</span>
-            <img src="logo.png" alt="Mallify" class="features-logo" style="display: block; margin: 0 auto 1.5rem auto; max-width: 300px; height: auto;">
+            <img src="logo.png" alt="Mallify" class="features-logo"
+                style="display: block; margin: 0 auto 1.5rem auto; max-width: 300px; height: auto;">
             <p class="features-tagline">One Mall. One App. Infinite Experiences.</p>
             <p class="platform-text">WORLD'S FIRST CONNECTED MALL PLATFORM</p>
         </div>
-        
+
         <div class="features-grid">
             <!-- Card 1 -->
             <div class="feature-card">
                 <div class="card-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+                        <path d="M7 2v20"></path>
+                        <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+                    </svg>
                 </div>
                 <h3>Restaurant Table Booking</h3>
                 <p>Reserve in seconds. Skip the wait. Walk straight to your table.</p>
@@ -123,7 +149,11 @@
             <!-- Card 2 -->
             <div class="feature-card">
                 <div class="card-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
                 </div>
                 <h3>Live Table Availability</h3>
                 <p>See real-time tables across every restaurant in your mall.</p>
@@ -132,7 +162,12 @@
             <!-- Card 3 -->
             <div class="feature-card">
                 <div class="card-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z">
+                        </path>
+                    </svg>
                 </div>
                 <h3>Real-Time Menu Discovery</h3>
                 <p>Browse menus, prices and chef's specials before you arrive.</p>
@@ -141,7 +176,13 @@
             <!-- Card 4 -->
             <div class="feature-card">
                 <div class="card-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                        <path
+                            d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z">
+                        </path>
+                    </svg>
                 </div>
                 <h3>Mall Navigation</h3>
                 <p>Interactive 3D maps to guide you to any store or facility.</p>
@@ -150,7 +191,11 @@
             <!-- Card 5 -->
             <div class="feature-card">
                 <div class="card-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                        <polyline points="17 2 12 7 7 2"></polyline>
+                    </svg>
                 </div>
                 <h3>Movie & Entertainment Booking</h3>
                 <p>Book tickets and pre-order snacks in one seamless flow.</p>
@@ -159,7 +204,12 @@
             <!-- Card 6 -->
             <div class="feature-card">
                 <div class="card-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
                 </div>
                 <h3>Mood-Personalised Experience</h3>
                 <p>AI-driven recommendations based on what you feel like doing.</p>
@@ -170,20 +220,23 @@
         <p class="ecosystem-text">Complete mall ecosystem. One ambient interface. Every visit, elevated.</p>
 
         <div class="certificate-section">
-            <h2 class="form-title" style="margin-bottom: 1rem;">Claim Your <span class="gold-text">Launch Thank Note</span></h2>
-            <p class="form-desc" style="margin-bottom: 2rem;">Commemorate your attendance at the world premiere of Mallify.</p>
+            <h2 class="form-title" style="margin-bottom: 1rem;">Claim Your <span class="gold-text">Launch Thank
+                    Note</span></h2>
+            <p class="form-desc" style="margin-bottom: 2rem;">Commemorate your attendance at the world premiere of
+                Mallify.</p>
             <div class="cert-form-row">
                 <input type="text" id="cert-name" placeholder="Your Full Name">
-                <button onclick="generateCertificate()" class="submit-btn">Download &rarr;</button>
+                <button onclick="generateCertificate()" class="submit-btn">Claim &rarr;</button>
             </div>
         </div>
 
-        <div class="form-card">
+        <div class="form-card" id="join-form-card">
             <span class="eyebrow form-eyebrow">G E T &nbsp; E A R L Y &nbsp; A C C E S S</span>
             <h2 class="form-title">Join the <span class="gold-text">revolution.</span></h2>
-            <p class="form-desc">Founding members shape the platform — and walk into launch day with priority access, complimentary perks and invitations to private tasting events.</p>
-            
-            <form id="early-access-form" onsubmit="event.preventDefault(); alert('Request received.');">
+            <p class="form-desc">Founding members shape the platform — and walk into launch day with priority access,
+                complimentary perks and invitations to private tasting events.</p>
+
+            <form id="early-access-form" onsubmit="submitJoinForm(event)">
                 <div class="input-row">
                     <div class="input-group">
                         <label for="name">FULL NAME</label>
@@ -199,18 +252,29 @@
                     <input type="email" id="email" required placeholder="you@domain.com">
                 </div>
                 <div class="form-footer">
-                    <button type="submit" class="submit-btn" style="box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);">Join The Revolution &rarr;</button>
+                    <button type="submit" class="submit-btn" style="box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);">Join
+                        The Revolution &rarr;</button>
                     <span class="spam-notice">No spam. Just one invite, when the doors open.</span>
                 </div>
             </form>
         </div>
 
+        <div class="form-card" id="join-success-card" style="display: none; text-align: center; flex-direction: column; justify-content: center; align-items: center; min-height: 350px;">
+            <div class="success-icon-anim" style="margin-bottom: 1.5rem; color: #d4af37;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <h2 class="form-title" style="margin-bottom: 1rem;">Congratulations 🎉!</h2>
+            <p class="form-desc" style="font-size: 1.2rem;">You’ve unlocked Pre-Launch Access.</p>
+        </div>
+
         <div class="site-footer">
-            <p class="footer-tagline">The future of mall experiences begins with <span class="gold-text">Mallify.</span></p>
+            <p class="footer-tagline">The future of mall experiences begins with <span class="gold-text">Mallify.</span>
+            </p>
             <p class="footer-copyright">&copy; 2026 MALLIFY &bull; A NEW CATEGORY OF EXPERIENCE</p>
         </div>
     </div>
     <script src="cert_data.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
