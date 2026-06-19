@@ -950,30 +950,3 @@ body {
     z-index: -1;
     display: none;
 }
-
-/* Comprehensive Mobile Responsiveness Breakpoints */
-@media (max-width: 768px) {
-    /* Scale down the massive countdown number */
-    .countdown-text { 
-        font-size: 8rem; 
-    }
-    /* Scale down hero typography */
-    .hero-title { 
-        font-size: 2.5rem; 
-    }
-    .hero-subtitle { 
-        font-size: 1rem; 
-        padding: 0 1rem;
-    }
-    /* Shrink the massive form padding so it fits on narrow screens */
-    .form-card { 
-        padding: 2rem; 
-        width: 90%;
-    }
-    /* Adjust the video container for vertical phone screens */
-    .video-container { 
-        width: 95%; 
-        height: 40vh; 
-        min-height: 250px;
-    }
-}

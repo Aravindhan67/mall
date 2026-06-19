@@ -85,18 +85,6 @@ function initAudio() {
                 resumePromise.catch(() => { /* suppress desktop warning */ });
             }
         }
-        
-        // CRITICAL iOS HACK: Mobile Safari will NOT unlock the audio context just by calling resume().
-        // It requires an actual audio node to play a sound during the trusted user interaction.
-        // We generate a microscopic, completely silent sound to force Safari to unlock the audio engine.
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        gain.gain.value = 0; // 100% silent
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(0);
-        osc.stop(audioCtx.currentTime + 0.001);
-
         isAudioEnabled = true;
     } catch (e) {
         console.warn("Audio API not supported", e);
