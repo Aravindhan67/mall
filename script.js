@@ -51,9 +51,17 @@ function skipIntro() {
             overlay.style.visibility = "hidden";
             overlay.style.display = "none";
             isCountdownVisible = true;
+            if (!isAudioEnabled) {
+                const unmuteBtn = document.getElementById('unmute-btn');
+                if (unmuteBtn) unmuteBtn.style.display = 'flex';
+            }
         }, 1000);
     } else {
         isCountdownVisible = true;
+        if (!isAudioEnabled) {
+            const unmuteBtn = document.getElementById('unmute-btn');
+            if (unmuteBtn) unmuteBtn.style.display = 'flex';
+        }
     }
 }
 
@@ -85,12 +93,16 @@ function initAudio() {
                     if (audioCtx.state === 'running') {
                         isAudioEnabled = true;
                         removeAudioListeners();
+                        const unmuteBtn = document.getElementById('unmute-btn');
+                        if (unmuteBtn) unmuteBtn.style.display = 'none';
                     }
                 }).catch(() => { /* suppress desktop warning */ });
             }
         } else if (audioCtx.state === 'running') {
             isAudioEnabled = true;
             removeAudioListeners();
+            const unmuteBtn = document.getElementById('unmute-btn');
+            if (unmuteBtn) unmuteBtn.style.display = 'none';
         }
     } catch (e) {
         console.warn("Audio API not supported", e);
