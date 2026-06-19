@@ -4,7 +4,7 @@ const introTexts = [
     "We changed the destination.",
     "A seamless ambient experience.",
     "Welcome to the future.",
-    "Mallify. Infinite Experiences."
+    "Infinite Experiences."
 ];
 
 let currentIntroStep = 0;
