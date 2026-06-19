@@ -121,49 +121,49 @@ let isTick = true;
 function playTickSound() {
     if (!isAudioEnabled || !audioCtx || audioCtx.state === 'suspended') return;
 
-    // High frequency mechanical click (gears)
-    const bufferSize = audioCtx.sampleRate * 0.04;
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-    }
+    // Wall clock "Click" (Heavy mechanism locking)
+    const clickOsc = audioCtx.createOscillator();
+    const clickGain = audioCtx.createGain();
+    const clickFilter = audioCtx.createBiquadFilter();
+
+    clickOsc.type = 'square';
+    // Pitch drops incredibly fast to simulate a heavy click
+    clickOsc.frequency.setValueAtTime(isTick ? 800 : 600, audioCtx.currentTime);
+    clickOsc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.02);
+
+    clickFilter.type = 'bandpass';
+    clickFilter.frequency.value = isTick ? 2500 : 1800;
+    clickFilter.Q.value = 1.0;
+
+    clickGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    clickGain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.002);
+    clickGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.025);
+
+    clickOsc.connect(clickFilter);
+    clickFilter.connect(clickGain);
+    clickGain.connect(audioCtx.destination);
+
+    // Wall clock "Thud/Resonance" (Wooden/Plastic Body echoing)
+    const bodyOsc = audioCtx.createOscillator();
+    const bodyGain = audioCtx.createGain();
     
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
+    bodyOsc.type = 'sine';
+    bodyOsc.frequency.setValueAtTime(isTick ? 250 : 200, audioCtx.currentTime);
+    bodyOsc.frequency.exponentialRampToValueAtTime(isTick ? 150 : 120, audioCtx.currentTime + 0.04);
+
+    bodyGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    bodyGain.gain.linearRampToValueAtTime(0.6, audioCtx.currentTime + 0.005);
+    bodyGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.06);
+
+    bodyOsc.connect(bodyGain);
+    bodyGain.connect(audioCtx.destination);
+
+    clickOsc.start(audioCtx.currentTime);
+    bodyOsc.start(audioCtx.currentTime);
     
-    const bandpass = audioCtx.createBiquadFilter();
-    bandpass.type = 'bandpass';
-    bandpass.frequency.value = isTick ? 6000 : 4500;
-    bandpass.Q.value = 1.0;
+    clickOsc.stop(audioCtx.currentTime + 0.04);
+    bodyOsc.stop(audioCtx.currentTime + 0.07);
 
-    const noiseGain = audioCtx.createGain();
-    noiseGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    noiseGain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 0.002);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.03);
-
-    noise.connect(bandpass);
-    bandpass.connect(noiseGain);
-    noiseGain.connect(audioCtx.destination);
-
-    // Low frequency resonance (clock body thud)
-    const osc = audioCtx.createOscillator();
-    const oscGain = audioCtx.createGain();
-    
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(isTick ? 300 : 200, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(isTick ? 100 : 80, audioCtx.currentTime + 0.03);
-
-    oscGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    oscGain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.002);
-    oscGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
-
-    osc.connect(oscGain);
-    oscGain.connect(audioCtx.destination);
-
-    noise.start(audioCtx.currentTime);
-    osc.start(audioCtx.currentTime);
-    
     isTick = !isTick; // alternate for the next second
 }
 
