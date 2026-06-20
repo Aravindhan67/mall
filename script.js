@@ -168,7 +168,7 @@ function playTickSound() {
 }
 
 // Target date for the launch: June 19, 2026 at 5:30 PM
-const targetDate = new Date("June 21, 2026 18:00:00").getTime();
+const targetDate = new Date("June 20, 2026 13:45:00").getTime();
 let isCountdownVisible = false;
 
 function updateCountdown() {
@@ -559,34 +559,66 @@ document.addEventListener('click', (e) => {
     }
 });
 
-function submitJoinForm(event) {
+async function submitJoinForm(event) {
     event.preventDefault();
 
     const formCard = document.getElementById('join-form-card');
     const successCard = document.getElementById('join-success-card');
+    const submitBtn = event.target.querySelector('.submit-btn');
 
     if (!formCard || !successCard) return;
 
-    // Smoothly fade out the form card
-    formCard.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-    formCard.style.opacity = "0";
-    formCard.style.transform = "scale(0.95)";
+    const name = document.getElementById('name').value;
+    const mobile = document.getElementById('mobile').value;
+    const email = document.getElementById('email').value;
 
-    setTimeout(() => {
-        formCard.style.display = "none";
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = "Joining... &rarr;";
+    submitBtn.disabled = true;
 
-        // Prepare success card
-        successCard.style.display = "flex";
-        successCard.style.opacity = "0";
-        successCard.style.transform = "scale(0.95)";
-        successCard.style.transition = "opacity 0.6s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    try {
+        const response = await fetch('http://localhost:3000/api/join', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, mobile, email })
+        });
 
-        // Trigger reflow
-        void successCard.offsetWidth;
+        const data = await response.json();
 
-        // Fade in and pop up success card
-        successCard.style.opacity = "1";
-        successCard.style.transform = "scale(1)";
+        if (response.ok) {
+            // Smoothly fade out the form card
+            formCard.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            formCard.style.opacity = "0";
+            formCard.style.transform = "scale(0.95)";
 
-    }, 500); // Wait for form fade out
+            setTimeout(() => {
+                formCard.style.display = "none";
+
+                // Prepare success card
+                successCard.style.display = "flex";
+                successCard.style.opacity = "0";
+                successCard.style.transform = "scale(0.95)";
+                successCard.style.transition = "opacity 0.6s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+
+                // Trigger reflow
+                void successCard.offsetWidth;
+
+                // Fade in and pop up success card
+                successCard.style.opacity = "1";
+                successCard.style.transform = "scale(1)";
+
+            }, 500); // Wait for form fade out
+        } else {
+            alert(data.error || "An error occurred. Please try again.");
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("Failed to connect to the server. Please check your connection.");
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+    }
 }
